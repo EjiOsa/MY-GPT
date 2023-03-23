@@ -11,6 +11,7 @@ const {
 const path = require("path");
 const Store = require("electron-store");
 const store = new Store();
+const localShortcut = require("electron-localshortcut");
 
 //------------------------------------
 // 定数
@@ -55,6 +56,27 @@ function createWindow() {
   mainWindow.setVisibleOnAllWorkspaces(true);
   mainWindow.loadURL("https://chat.openai.com/chat");
   // mainWindow.webContents.openDevTools();
+
+  localShortcut.register(mainWindow, "F12", () => {
+    mainWindow.webContents.toggleDevTools();
+  });
+
+localShortcut.register(mainWindow, "CommandOrControl+Enter", async () => {
+  const webContents = mainWindow.webContents;
+
+  try {
+    await webContents.executeJavaScript(`
+      (function() {
+        let button = document.querySelector("textarea + button");
+        if (button) {
+          button.click();
+        }
+      })();
+    `);
+  } catch (error) {
+    console.error('Error executing script:', error);
+  }
+});
 
   // ウィンドウが閉じられる直前に保存
   mainWindow.on("close", () => {
