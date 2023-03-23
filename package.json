@@ -1,0 +1,19 @@
+{
+  "name": "gpt-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "productName": "MY GPT",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-packager . --icon=chatgpt.ico --overwrite"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  },
+  "devDependencies": {
+    "electron": "^23.1.4",
+    "electron-packager": "^17.1.1"
+  }
+}
