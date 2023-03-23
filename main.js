@@ -61,11 +61,11 @@ function createWindow() {
     mainWindow.webContents.toggleDevTools();
   });
 
-localShortcut.register(mainWindow, "CommandOrControl+Enter", async () => {
-  const webContents = mainWindow.webContents;
+  localShortcut.register(mainWindow, "CommandOrControl+Enter", async () => {
+    const webContents = mainWindow.webContents;
 
-  try {
-    await webContents.executeJavaScript(`
+    try {
+      await webContents.executeJavaScript(`
       (function() {
         let button = document.querySelector("textarea + button");
         if (button) {
@@ -73,10 +73,10 @@ localShortcut.register(mainWindow, "CommandOrControl+Enter", async () => {
         }
       })();
     `);
-  } catch (error) {
-    console.error('Error executing script:', error);
-  }
-});
+    } catch (error) {
+      console.error("Error executing script:", error);
+    }
+  });
 
   // ウィンドウが閉じられる直前に保存
   mainWindow.on("close", () => {
@@ -93,6 +93,7 @@ app
         mainWindow.hide();
       } else {
         mainWindow.show();
+        mainWindow.focus();
       }
     });
   })
