@@ -10,6 +10,7 @@
     "build": "electron-packager . --icon=chatgpt.ico --overwrite"
   },
   "dependencies": {
+    "electron-localshortcut": "^3.2.1",
     "electron-store": "^8.1.0"
   },
   "devDependencies": {
