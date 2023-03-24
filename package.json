@@ -3,11 +3,35 @@
   "version": "1.0.0",
   "main": "main.js",
   "license": "MIT",
-  "productName": "MY GPT",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "electron-packager . --icon=chatgpt.ico --overwrite"
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "jp.ejiosa.my-app",
+    "productName": "MyGPT",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "package.json"
+    ],
+    "mac": {
+      "icon": "assets/chatgpt.icns",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "icon": "assets/chatgpt.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "dependencies": {
     "electron-localshortcut": "^3.2.1",
@@ -15,6 +39,6 @@
   },
   "devDependencies": {
     "electron": "^23.1.4",
-    "electron-packager": "^17.1.1"
+    "electron-builder": "^23.6.0"
   }
 }
