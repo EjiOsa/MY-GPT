@@ -61,13 +61,16 @@ function createWindow() {
     mainWindow.webContents.toggleDevTools();
   });
 
+  /**
+   * CommandOrControl+Enterで文章送信
+   */
   localShortcut.register(mainWindow, "CommandOrControl+Enter", async () => {
     const webContents = mainWindow.webContents;
 
     try {
       await webContents.executeJavaScript(`
       (function() {
-        let button = document.querySelector("textarea + button");
+        const button = document.querySelector("textarea + button");
         if (button) {
           button.click();
         }
@@ -85,22 +88,42 @@ function createWindow() {
   });
 }
 
+function showAndFocusWindow() {
+  if (mainWindow) {
+    mainWindow.show();
+    mainWindow.focus();
+  }
+}
+
+/**
+ * globalShortcutの処理
+ */
 app
   .whenReady()
   .then(() => {
+    // CommandOrControl+Gでウィンドウの表示/非表示を切り替える
     globalShortcut.register("CommandOrControl+G", () => {
       if (mainWindow.isVisible()) {
         mainWindow.hide();
       } else {
-        mainWindow.show();
-        mainWindow.focus();
+        showAndFocusWindow();
       }
+    });
+
+    // CommandOrControl+shift+Gで再起動
+    globalShortcut.register("CommandOrControl+Shift+G", () => {
+      app.relaunch();
+      app.exit();
     });
   })
   .then(createWindow);
 
 app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  } else {
+    showAndFocusWindow();
+  }
 });
 
 app.on("window-all-closed", function () {
