@@ -61,6 +61,11 @@ function createWindow() {
     mainWindow.webContents.toggleDevTools();
   });
 
+  // F5キーでリロード機能を実装
+  localShortcut.register(mainWindow, "F5", () => {
+    mainWindow.webContents.reload();
+  });
+
   /**
    * CommandOrControl+Enterで文章送信
    */
