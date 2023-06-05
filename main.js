@@ -75,10 +75,14 @@ function createWindow() {
     try {
       await webContents.executeJavaScript(`
       (function() {
+        const textarea = document.querySelector("#prompt-textarea");
         const button = document.querySelector("textarea + button");
-        if (button) {
+        if (button && textarea && textarea.value.trim() !== '') {
           button.click();
+          textarea.value = '';  // テキストエリアをクリア
+          return 'Button clicked!';
         }
+        return 'Button not clicked!';
       })();
     `);
     } catch (error) {
