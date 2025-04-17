@@ -55,7 +55,11 @@ function createWindow() {
   mainWindow.setAlwaysOnTop(true, "screen-saver");
   mainWindow.setVisibleOnAllWorkspaces(true);
   mainWindow.loadURL("https://chat.openai.com/chat");
-  // mainWindow.webContents.openDevTools();
+
+    mainWindow.on("close", () => {
+    store.set("window.size", mainWindow.getSize());
+    store.set("window.pos", mainWindow.getPosition());
+  });
 
   localShortcut.register(mainWindow, "F12", () => {
     mainWindow.webContents.toggleDevTools();
@@ -64,36 +68,6 @@ function createWindow() {
   // F5キーでリロード機能を実装
   localShortcut.register(mainWindow, "F5", () => {
     mainWindow.webContents.reload();
-  });
-
-  /**
-   * CommandOrControl+Enterで文章送信
-   */
-  localShortcut.register(mainWindow, "CommandOrControl+Enter", async () => {
-    const webContents = mainWindow.webContents;
-
-    try {
-      await webContents.executeJavaScript(`
-      (function() {
-        const textarea = document.querySelector("#prompt-textarea");
-        const button = document.querySelector("textarea + button");
-        if (button && textarea && textarea.value.trim() !== '') {
-          button.click();
-          textarea.value = '';  // テキストエリアをクリア
-          return 'Button clicked!';
-        }
-        return 'Button not clicked!';
-      })();
-    `);
-    } catch (error) {
-      console.error("Error executing script:", error);
-    }
-  });
-
-  // ウィンドウが閉じられる直前に保存
-  mainWindow.on("close", () => {
-    store.set("window.pos", mainWindow.getPosition()); // ウィンドウの座標を記録
-    store.set("window.size", mainWindow.getSize()); // ウィンドウのサイズを記録
   });
 }
 
