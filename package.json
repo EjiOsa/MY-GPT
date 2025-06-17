@@ -14,11 +14,6 @@
     "directories": {
       "output": "dist"
     },
-    "files": [
-      "main.js",
-      "package.json",
-      "preload.js"
-    ],
     "mac": {
       "icon": "assets/chatgpt.icns",
       "target": [
