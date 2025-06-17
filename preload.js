@@ -12,7 +12,7 @@ document.addEventListener("keydown", (e) => {
 
   // Ctrl/Cmd+Enter → 送信
   if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-    e.preventDefault(); e.stopImmediatePropagation();
+    e.preventDefault();
     document
       .querySelector('button[data-testid="send-button"], button[aria-label="送信"]')
       ?.click();
@@ -21,7 +21,7 @@ document.addEventListener("keydown", (e) => {
 
   // Enter（単押し）→ 改行
   if (e.key === "Enter") {
-    e.preventDefault(); e.stopImmediatePropagation();
+    e.preventDefault();
 
     if (isTextarea) {
       // textarea には直接 "\n"
